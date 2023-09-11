@@ -38,9 +38,11 @@ def _cuda_library_impl(ctx):
     if use_rdc:
         transitive_objects = depset(transitive = [dep[CudaInfo].rdc_objects for dep in attr.deps if CudaInfo in dep])
         transitive_pic_objects = depset(transitive = [dep[CudaInfo].rdc_pic_objects for dep in attr.deps if CudaInfo in dep])
-        objects = depset(transitive = [objects, transitive_objects])
+        # objects = depset(transitive = [objects, transitive_objects])
+        objects = depset(transitive = [objects])
         rdc_objects = objects
-        pic_objects = depset(transitive = [pic_objects, transitive_pic_objects])
+        # pic_objects = depset(transitive = [pic_objects, transitive_pic_objects])
+        pic_objects = depset(transitive = [pic_objects])
         rdc_pic_objects = pic_objects
         dlink_object = depset([device_link(ctx, cuda_toolchain, cc_toolchain, objects, common, pic = False, rdc = use_rdc)])
         dlink_pic_object = depset([device_link(ctx, cuda_toolchain, cc_toolchain, pic_objects, common, pic = True, rdc = use_rdc)])
